@@ -1,0 +1,154 @@
+var img;  // Declare variable 'img'.
+
+var megsimage;  // Declare variable 'img'.
+let snowflakes = []; // array to hold snowflake objects
+
+function setup() {
+  createCanvas(1000,1080);
+  fill(240);
+  noStroke();
+    megsimage = loadImage("snow.jpg");  // Load the image
+}
+
+
+this.update = function() {
+  this.x = this.x + random(-1, 1);
+  this.y = this.y + random(-1,1);
+}
+
+
+function draw() {
+  background('black');
+  let t = frameCount/12000;
+    // Displays the image at its actual size at point (0,0)
+  image(megsimage, 500, 500);
+  // Displays the image at point (0, height/2) at half size
+  image(img, 0, height/2, img.width/2, img.height/2);
+  // create a random number of snowflakes each frame
+  for(var i=0; i<random(5); i++)
+  {
+    snowflakes.push(new snowflake()); // adds new snowflake object to array
+  }
+  
+  // loop through snowflakes with a for..of loop
+  for (let flake of snowflakes)
+  {
+		flake.update(t); // update snowflake position
+    flake.display();// draw snowflake
+	}
+image(megsimage, 0, 500);
+}
+
+
+
+// snowflake class
+function snowflake(){
+
+  // initialize coordinates
+  this.posX = 0;
+  this.posY = random(-50,0);
+  this.initialangle = random(0,2*PI);
+  this.size = random(2,5);
+  
+  // radius of snowflake spiral
+  // chosen so the snowflakes are uniformly spread out in area
+  this.radius = sqrt(random(pow(width/20,2)));
+
+  this.update = function(time)
+  {
+
+    // x position follows a circle
+    let w = 0.6; // angular speed (larger = spins faster)
+    let angle = w*time + this.initialangle;
+		this.posX = width/2 + this.radius*sin(angle);
+
+    // different size snowflakes fall at slightly different y speeds
+    this.posY += pow(this.size,0.5);
+    
+    // delete snowflake if past end of screen
+    if(this.posY > height)
+    {
+      let index = snowflakes.indexOf(this);
+      snowflakes.splice(index,1);
+    }
+
+  };
+
+  this.display = function(){
+    ellipse(this.posX,this.posY,this.size);
+  };
+  
+  
+}
+//NEW CODE
+
+this.display= function () {
+  image(img, this.x, this.y);
+}
+
+this.update = function() {
+  this.x = this.x + random(-1, 1);
+  this.y = this.y + random(-1,1);
+}
+
+
+function draw() {
+  background('black');
+  let t = frameCount/12000;
+  
+  // create a random number of snowflakes each frame
+  for(var x=0; x<random(5); x++)
+  {
+    snowflakes.push(new snowflake()); // adds new snowflake object to array
+  }
+  
+  // loop through snowflakes with a for..of loop
+  for (let flake of snowflakes)
+  {
+		flake.update(t); // update snowflake position
+    flake.display();// draw snowflake
+	}
+
+}
+
+
+
+// snowflake class
+function snowflake(){
+
+  // initialize coordinates
+  this.posX = 0;
+  this.posY = random(-50,0);
+  this.initialangle = random(0,2*PI);
+  this.size = random(2,5);
+  
+  // radius of snowflake spiral
+  // chosen so the snowflakes are uniformly spread out in area
+  this.radius = sqrt(random(pow(width/20,2)));
+
+  this.update = function(time)
+  {
+
+    // x position follows a circle
+    let w = 0.6; // angular speed (larger = spins faster)
+    let angle = w*time + this.initialangle;
+		this.posX = width/2 + this.radius*sin(angle);
+
+    // different size snowflakes fall at slightly different y speeds
+    this.posY += pow(this.size,0.5);
+    
+    // delete snowflake if past end of screen
+    if(this.posY > height)
+    {
+      let index = snowflakes.indexOf(this);
+      snowflakes.splice(index,1);
+    }
+
+  };
+
+  this.display = function(){
+    ellipse(this.posX,this.posY,this.size);
+  };
+  
+  
+}
